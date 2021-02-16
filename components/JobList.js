@@ -1,9 +1,10 @@
 import JobItem from './JobItem';
 
 const JobList = ({ jobs }) => {
-	console.log(jobs)
 	return (
-		<div>
+		<div className='container bg-white rounded-md'>
+			<div className='flex'>123 job postings</div>
+			
 			{jobs.map((job) => (
 				<JobItem job={job} />
 			))}
