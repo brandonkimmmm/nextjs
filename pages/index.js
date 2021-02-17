@@ -18,7 +18,7 @@ const Index = ({ jobs, filters }) => (
 					<div>Submit</div>
 				</button>
 			</div>
-			<div className='grid grid-cols-3 gap-4 mx-4'>
+			<div className='grid grid-cols-3 gap-4 mx-4 mt-4'>
 				<FilterList filters={filters} />
 				<JobList jobs={jobs.jobs} />
 			</div>

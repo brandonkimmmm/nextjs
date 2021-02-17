@@ -1,7 +1,9 @@
 const JobItem = ({ job }) => {
 	return (
-		<div>
-			<h3>{job.name.toUpperCase().substring(0, 2)}</h3>
+		<div className='flex relative'>
+			<div>
+				{job.name.toUpperCase().substring(0, 2)} {`${job.total_jobs_in_hospital} Jobs for ${job.name}`}
+			</div>
 		</div>
 	)
 }
