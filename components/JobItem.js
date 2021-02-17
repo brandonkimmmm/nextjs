@@ -22,7 +22,7 @@ const JobItem = ({ job }) => {
 	const jobDetails = (item) => {
 		return (
 			<div className='flex flex-row'>
-				<div className='flex flex-col space-y-4'>
+				<div className='flex flex-col space-y-4 w-5/6'>
 					<div className='flex flex-row'>
 						<strong className='w-1/2'>Department:</strong>
 						<div className='w-1/2'>{item.department.join(', ')}</div>
@@ -36,9 +36,13 @@ const JobItem = ({ job }) => {
 						<div className='w-1/2'>{item.description}</div>
 					</div>
 				</div>
-				<div className='flex flex-col'>
-					<div>but</div>
-					<div>but</div>
+				<div className='flex flex-col w-1/6 justify-center space-y-2 items-end'>
+					<button type="submit" className="rounded-md border p-3 text-lg bg-blue-400 text-white">
+						<div>Job details</div>
+					</button>
+					<button type="submit" className="rounded-md border p-3 text-lg text-blue-400 border-blue-400">
+						<div>Save job</div>
+					</button>
 				</div>
 			</div>
 		)
