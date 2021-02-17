@@ -37,10 +37,10 @@ const JobItem = ({ job }) => {
 					</div>
 				</div>
 				<div className='flex flex-col w-1/6 justify-center space-y-2 items-end'>
-					<button type="submit" className="rounded-md border p-3 text-lg bg-blue-400 text-white">
+					<button type='submit' className='rounded-md border p-3 text-lg bg-blue-400 text-white'>
 						<div>Job details</div>
 					</button>
-					<button type="submit" className="rounded-md border p-3 text-lg text-blue-400 border-blue-400">
+					<button type='submit' className='rounded-md border p-3 text-lg text-blue-400 border-blue-400'>
 						<div>Save job</div>
 					</button>
 				</div>
@@ -54,8 +54,8 @@ const JobItem = ({ job }) => {
 				<ul className='divide-y'>
 					<li className='mt-4'></li>
 					{job.items.map((item) => (
-						<li className='flex flex-col space-y-4 py-4' onClick={(e) => toggleJobDetails(e, item.job_id)}>
-							<div className='flex flex-row w-full items-center'>
+						<li className='flex flex-col space-y-4 py-4'>
+							<div className='flex flex-row w-full items-center' onClick={(e) => toggleJobDetails(e, item.job_id)}>
 								<div className='flex-1 flex-col'>
 									<strong>{item.job_title}</strong>
 									<div>
