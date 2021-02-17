@@ -2,7 +2,7 @@ import FilterItem from './FilterItem';
 
 const FilterList = ({ filters }) => {
 	return (
-		<div className='container mx-auto flex flex-col space-y-4 justify-center items-center'>
+		<div className='col-span-1 col-start-1 mx-auto space-y-4 justify-center items-center'>
 			{Object.keys(filters).map((filter) => (
 				<FilterItem name={filter.toUpperCase().replace('_', ' ')} data={filters[filter]} />
 			))}
