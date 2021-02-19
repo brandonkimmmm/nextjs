@@ -10,11 +10,11 @@ const Index = ({ jobs, filters }) => {
 
 	const [jobData, setJobData] = useState(jobs);
 	const [activeQueries, setActiveQueries] = useState({});
-	const [searchQuery, setSearchQuery] = useState(null);
+	const [searchString, setSearchString] = useState(null);
 
 	useEffect(() => {
 		fetchJobsData();
-	}, [activeQueries, searchQuery])
+	}, [activeQueries])
 
 	const setQuery = (query, option) => {
 		if (activeQueries[query] !== option) {
@@ -32,9 +32,6 @@ const Index = ({ jobs, filters }) => {
 				url += `&${activeQuery}=${activeQueries[activeQuery]}`;
 			}
 		}
-		if (searchQuery) {
-			url += `&search=${searchQuery}`;
-		}
 
 		const res = await fetch(url);
 		const data = await res.json();
@@ -42,23 +39,31 @@ const Index = ({ jobs, filters }) => {
 		setJobData(data.jobs);
 	};
 
+	const handleSubmit = (e) => {
+		console.log('tri')
+		e.preventDefault();
+		setQuery('search', searchString ? searchString.trim() : null);
+	};
+
 	return (
 		<>
 			<Nav />
 			<div className='bg-gray-200 mx-auto px-1 py-4'>
-				<div className="flex-row relative mx-4 text-gray-600">
-					<span class="text-black absolute ml-9 mt-5 w-10">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+				<form onSubmit={(e) => handleSubmit(e)} className='flex-row relative mx-4 text-gray-600'>
+					<span className='text-black absolute ml-9 mt-5 w-10'>
+						<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+							<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' />
 						</svg>
 					</span>
 					<input
-						className="border-2 text-md border-gray-300 bg-white h-20 px-20 rounded-lg focus:outline-none w-full"
-						type="search"
-						name="search"
-						placeholder="Search for any job, title, keywords or company"
+						className='border-2 text-md border-gray-300 bg-white h-20 px-20 rounded-lg focus:outline-none w-full'
+						type='search'
+						name='search'
+						placeholder='Search for any job, title, keywords or company'
+						value={searchString}
+						onChange={(e) => setSearchString(e.target.value)}
 					/>
-				</div>
+				</form>
 				<div className='flex flex-row space-x-4 m-4'>
 					<div className='flex flex-col w-1/3 space-y-4 items-center'>
 						{Object.keys(filters).map((filter) => (

@@ -1,6 +1,7 @@
 import jobs from '../../data/jobs'
 
 export default async (req, res) => {
+	console.log(req.query)
 	res.statusCode = 200
 	// @todo: implement filters and search
 	// @todo: implement automated tests
