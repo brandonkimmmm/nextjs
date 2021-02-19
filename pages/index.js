@@ -2,36 +2,62 @@ import { API_URL } from '../constants';
 import Nav from '../components/Nav';
 import FilterItem from '../components/FilterItem';
 import JobItem from '../components/JobItem';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Dropdown from '../components/Dropdown';
 
 const Index = ({ jobs, filters }) => {
 	const queryOptions = ['location', 'role', 'department', 'education', 'experience'];
 
+	const [jobData, setJobData] = useState(jobs);
 	const [activeQueries, setActiveQueries] = useState({});
+	const [searchQuery, setSearchQuery] = useState(null);
+
+	useEffect(() => {
+		fetchJobsData();
+	}, [activeQueries, searchQuery])
 
 	const setQuery = (query, option) => {
-		setActiveQueries({
-			...activeQueries,
-			[query]: option
-		});
+		if (activeQueries[query] !== option) {
+			setActiveQueries({
+				...activeQueries,
+				[query]: option === 'clear' ? null : option
+			});
+		}
 	};
 
+	const fetchJobsData = async() => {
+		let url = `${API_URL}/jobs?`;
+		for (let activeQuery in activeQueries) {
+			if (activeQueries[activeQuery]) {
+				url += `&${activeQuery}=${activeQueries[activeQuery]}`;
+			}
+		}
+		if (searchQuery) {
+			url += `&search=${searchQuery}`;
+		}
+
+		const res = await fetch(url);
+		const data = await res.json();
+
+		setJobData(data.jobs);
+	};
 
 	return (
 		<>
 			<Nav />
 			<div className='bg-gray-200 mx-auto px-1 py-4'>
-				<div className="relative mx-4 text-gray-600">
+				<div className="flex-row relative mx-4 text-gray-600">
+					<span class="text-black absolute ml-9 mt-5 w-10">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+						</svg>
+					</span>
 					<input
-						className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none w-full"
+						className="border-2 text-md border-gray-300 bg-white h-20 px-20 rounded-lg focus:outline-none w-full"
 						type="search"
 						name="search"
-						placeholder="Search"
+						placeholder="Search for any job, title, keywords or company"
 					/>
-					<button type="submit" className="absolute right-0 top-0 mt-5 mr-4">
-						<div>Submit</div>
-					</button>
 				</div>
 				<div className='flex flex-row space-x-4 m-4'>
 					<div className='flex flex-col w-1/3 space-y-4 items-center'>
@@ -52,7 +78,7 @@ const Index = ({ jobs, filters }) => {
 							))}
 						</div>
 						<ul className='pt-10 space-y-8'>
-							{jobs.jobs.map((job) => (
+							{jobData.map((job) => (
 								<li>
 									<JobItem job={job} />
 								</li>
@@ -91,7 +117,7 @@ export const getStaticProps = async () => {
 	const jobsRes = await fetch(`${API_URL}/jobs`);
 	const filtersRes = await fetch(`${API_URL}/filters`);
 
-	const jobs = await jobsRes.json();
+	const { jobs } = await jobsRes.json();
 	const filters = await filtersRes.json();
 
 	return {
