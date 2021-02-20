@@ -98,15 +98,15 @@ const Index = ({ jobs, searchOptions, filters }) => {
 	return (
 		<>
 			<Nav />
-			<div className='bg-gray-200 mx-auto px-1 py-4'>
-				<form onSubmit={(e) => handleSubmit(e)} className='flex-row relative mx-4 text-gray-600'>
+			<div className='bg-gray-200 w-full xl:px-4 xl:py-4'>
+				<form onSubmit={(e) => handleSubmit(e)} className='flex-row text-gray-600'>
 					<span className='text-black absolute ml-9 mt-5 w-10'>
 						<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
 							<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' />
 						</svg>
 					</span>
 					<input
-						className='border-2 text-md border-gray-300 bg-white h-20 px-20 rounded-lg focus:outline-none w-full'
+						className='xl:border my-1 text-md border-gray-300 bg-white h-20 px-20 xl:rounded-lg focus:outline-none w-full'
 						type='search'
 						name='search'
 						placeholder='Search for any job, title, keywords or company'
@@ -131,26 +131,28 @@ const Index = ({ jobs, searchOptions, filters }) => {
 					</div>
 					: null
 				}
-				<div className='flex flex-row space-x-4 xl:mx-4 mt-4'>
+				<div className='flex flex-row xl:space-x-4 xl:mt-4'>
 					<div className='hidden xl:flex flex-col w-1/3 space-y-4 items-center'>
 						{Object.keys(filters).map((filter) => (
 							<FilterItem name={filter.toUpperCase().replace('_', ' ')} data={filters[filter]} />
 						))}
 					</div>
-					<div className='w-full xl:w-2/3 py-6 px-4 flex flex-col bg-white rounded-md'>
-						<div className='hidden md:flex flex-row md:pt-8 space-x-4'>
+					<div className='w-full xl:w-2/3 py-6 px-4 mb-4 flex flex-col bg-white xl:rounded-md'>
+						<div className='flex flex-row pt-4'>
 							<div className='flex-1'>
 								<strong className='text-xl'>7,753</strong> job postings
 							</div>
-							<div className='text-gray-400'>
-								Sort By
+							<div className='hidden md:flex flex-row space-x-2'>
+								<div className='text-gray-400'>
+									Sort By
+								</div>
+								{queryOptions.map((query) => (
+									<Dropdown query={query} options={['asc', 'desc', 'clear']} onOptionSelect={setQuery} />
+								))}
 							</div>
-							{queryOptions.map((query) => (
-								<Dropdown query={query} options={['asc', 'desc', 'clear']} onOptionSelect={setQuery} />
-							))}
 						</div>
 						{!apiLoading
-							? <ul className='md:pt-10 space-y-8'>
+							? <ul className='pt-10 space-y-8'>
 								{jobData.length > 0
 									? jobData.map((job) => (
 										<li>
