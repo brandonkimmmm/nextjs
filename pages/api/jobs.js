@@ -20,7 +20,22 @@ for (let [index, job] of jobs.entries()) {
 
 	searchIndex[city] ? searchIndex[city].push(index) : searchIndex[city] = [index];
 
-	searchIndex[state] ? searchIndex[state].push(index) : searchIndex[state] = [index];
+	switch (state) {
+		case 'ca':
+			searchIndex['california'] ? searchIndex['california'].push(index) : searchIndex['california'] = [index];
+			break;
+		case 'ga':
+			searchIndex['georiga'] ? searchIndex['georgia'].push(index) : searchIndex['georgia'] = [index];
+			break;
+		case 'in':
+			searchIndex['indiana'] ? searchIndex['indiana'].push(index) : searchIndex['indiana'] = [index];
+			break;
+		case 'la':
+			searchIndex['louisiana'] ? searchIndex['louisiana'].push(index) : searchIndex['louisiana'] = [index];
+			break;
+		default:
+			break;
+	}
 };
 
 export default async (req, res) => {
@@ -73,5 +88,5 @@ export default async (req, res) => {
 	// correct results even if server-side can't finish replies in the right order
 	await new Promise((resolve) => setTimeout(resolve, 1000 * Math.random()))
 
-	res.status(200).json({jobs: result})
+	res.status(200).json({ jobs: result, searchOptions: Object.keys(searchIndex) })
 }

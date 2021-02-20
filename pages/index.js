@@ -4,14 +4,15 @@ import FilterItem from '../components/FilterItem';
 import JobItem from '../components/JobItem';
 import { useState, useEffect } from 'react';
 import Dropdown from '../components/Dropdown';
+import { startCase } from 'lodash';
 
-const Index = ({ jobs, filters }) => {
+const Index = ({ jobs, searchOptions, filters }) => {
 	const queryOptions = ['location', 'role', 'department', 'education', 'experience'];
-
 	const [jobData, setJobData] = useState(jobs);
 	const [activeQueries, setActiveQueries] = useState({});
 	const [searchTerms, setSearchTerms] = useState([]);
 	const [searchString, setSearchString] = useState(null);
+	const [searchFocus, setSearchFocus] = useState(false);
 
 	useEffect(() => {
 		fetchJobsData();
@@ -56,6 +57,28 @@ const Index = ({ jobs, filters }) => {
 		setSearchTerms(searchTerms.filter(t => t !== term));
 	}
 
+	const showOptions = () => {
+		return (
+			<ul className='absolute bg-white w-full divide rounded-md overflow-y-auto h-40 text-lg'>
+				{searchString
+					? searchOptions
+						.filter((option) => option.includes(searchString))
+						.map((option) => (
+							<li className='py-1/2 px-1'>
+								{startCase(option)}
+							</li>
+						))
+					: searchOptions
+						.map((option) => (
+							<li className='py-1/2 px-1'>
+								{startCase(option)}
+							</li>
+						))
+				}
+			</ul>
+		);
+	}
+
 	return (
 		<>
 			<Nav />
@@ -72,8 +95,14 @@ const Index = ({ jobs, filters }) => {
 						name='search'
 						placeholder='Search for any job, title, keywords or company'
 						value={searchString}
-						onChange={(e) => setSearchString(e.target.value)}
+						onChange={(e) => setSearchString(e.target.value.toLowerCase())}
+						onFocus={() => setSearchFocus(true)}
+						onBlur={() => setSearchFocus(false)}
 					/>
+					{searchFocus
+						? showOptions()
+						: null
+					}
 				</form>
 				{searchTerms.length > 0
 					? <div className='flex flex-wrap mx-4 mt-1'>
@@ -144,12 +173,13 @@ export const getStaticProps = async () => {
 	const jobsRes = await fetch(`${API_URL}/jobs`);
 	const filtersRes = await fetch(`${API_URL}/filters`);
 
-	const { jobs } = await jobsRes.json();
+	const { jobs, searchOptions } = await jobsRes.json();
 	const filters = await filtersRes.json();
 
 	return {
 		props: {
 			jobs,
+			searchOptions,
 			filters
 		}
 	};
