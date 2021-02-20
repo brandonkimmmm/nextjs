@@ -21,22 +21,22 @@ const JobItem = ({ job }) => {
 
 	const jobDetails = (item) => {
 		return (
-			<div className='flex flex-row'>
-				<div className='flex flex-col space-y-4 w-5/6'>
-					<div className='flex flex-row'>
-						<strong className='w-1/2'>Department:</strong>
-						<div className='w-1/2'>{item.department.join(', ')}</div>
+			<div className='flex flex-wrap lg:flex-row'>
+				<div className='flex flex-col space-y-4 w-full lg:w-5/6'>
+					<div className='flex flex-col lg:flex-row'>
+						<strong className='w-full lg:w-1/2'>Department:</strong>
+						<div className='w-full lg:w-1/2'>{item.department.join(', ')}</div>
 					</div>
-					<div className='flex flex-row'>
-						<strong className='w-1/2'>Hours / shifts:</strong>
-						<div className='w-1/2'>{`${item.hours[0]} Hours / ${item.work_schedule}`}</div>
+					<div className='flex flex-col lg:flex-row'>
+						<strong className='w-full lg:w-1/2'>Hours / shifts:</strong>
+						<div className='w-full lg:w-1/2'>{`${item.hours[0]} Hours / ${item.work_schedule}`}</div>
 					</div>
-					<div className='flex flex-row'>
-						<strong className='w-1/2'>Summary:</strong>
-						<div className='w-1/2'>{item.description}</div>
+					<div className='flex flex-col lg:flex-row'>
+						<strong className='w-full lg:w-1/2'>Summary:</strong>
+						<div className='w-full lg:w-1/2'>{item.description}</div>
 					</div>
 				</div>
-				<div className='flex flex-col w-1/6 justify-center space-y-2 items-end'>
+				<div className='flex flex-row lg:flex-col w-full lg:w-1/6 lg:justify-center space-x-2 lg:space-y-2 items-start mt-4 lg:items-end'>
 					<button type='submit' className='rounded-md border p-3 text-lg bg-blue-400 text-white'>
 						<div>Job details</div>
 					</button>
@@ -61,8 +61,11 @@ const JobItem = ({ job }) => {
 									<div>
 										{`${item.job_type} | $${item.salary_range[0]} - $${item.salary_range[1]} an hour | ${item.city}`}
 									</div>
+									<div className='lg:hidden'>
+										{moment(item.created).startOf('days').fromNow()}
+									</div>
 								</div>
-								<div>
+								<div className='hidden lg:flex'>
 									{moment(item.created).startOf('days').fromNow()}
 								</div>
 							</div>
