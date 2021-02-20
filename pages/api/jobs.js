@@ -46,16 +46,19 @@ export default async (req, res) => {
 		const searchTerms = search.split(',');
 		let activeIndexes = [];
 		for (let [index, term] of searchTerms.entries()) {
-			if (index === 0) {
-				activeIndexes = searchIndex[term];
-			} else {
-				activeIndexes = intersection(activeIndexes, searchIndex[term]);
+			if (searchIndex[term]) {
+				if (index === 0) {
+					activeIndexes = searchIndex[term];
+				} else {
+					activeIndexes = intersection(activeIndexes, searchIndex[term]);
+				}
 			}
 		}
 
 		for (let index of activeIndexes) {
 			result.push(jobs[index]);
 		}
+
 	} else {
 		result = jobs
 	}
