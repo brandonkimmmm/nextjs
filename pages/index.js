@@ -11,7 +11,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 	const [jobData, setJobData] = useState(jobs);
 	const [activeQueries, setActiveQueries] = useState({});
 	const [searchTerms, setSearchTerms] = useState([]);
-	const [searchString, setSearchString] = useState(null);
+	const [searchString, setSearchString] = useState('');
 	const [searchFocus, setSearchFocus] = useState(false);
 
 	useEffect(() => {
@@ -47,30 +47,40 @@ const Index = ({ jobs, searchOptions, filters }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const term = searchString.toLowerCase().trim();
-		if (!searchTerms.includes(term)) {
-			setSearchTerms([...searchTerms, term])
+		if (searchString) {
+			const term = searchString.toLowerCase().trim();
+			if (!searchTerms.includes(term)) {
+				setSearchTerms([...searchTerms, term])
+			}
 		}
+		setSearchString('');
 	};
 
 	const clearSearchTerm = (term) => {
 		setSearchTerms(searchTerms.filter(t => t !== term));
 	}
 
+	const autoComplete = (option) => {
+		if (!searchTerms.includes(option)) {
+			setSearchTerms([...searchTerms, option]);
+		}
+		setSearchString('');
+	}
+
 	const showOptions = () => {
 		return (
-			<ul className='absolute bg-white w-full divide rounded-md overflow-y-auto h-40 text-lg'>
+			<ul className='absolute border bg-white w-full divide rounded-md overflow-y-auto max-h-40 text-lg'>
 				{searchString
 					? searchOptions
 						.filter((option) => option.includes(searchString))
 						.map((option) => (
-							<li className='py-1/2 px-1'>
+							<li className='py-1/2 px-1' onMouseDown={() => autoComplete(option)}>
 								{startCase(option)}
 							</li>
 						))
 					: searchOptions
 						.map((option) => (
-							<li className='py-1/2 px-1'>
+							<li className='py-1/2 px-1' onMouseDown={() => autoComplete(option)}>
 								{startCase(option)}
 							</li>
 						))
@@ -99,7 +109,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 						onFocus={() => setSearchFocus(true)}
 						onBlur={() => setSearchFocus(false)}
 					/>
-					{searchFocus
+					{searchFocus && searchString
 						? showOptions()
 						: null
 					}
