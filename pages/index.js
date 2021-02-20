@@ -165,20 +165,20 @@ const Index = ({ jobs, searchOptions, filters }) => {
 					</div>
 				</div>
 			</div>
-			<div className='flex flex-row p-6 w-full'>
-				<div className='flex flex-col w-3/5 space-y-2'>
+			<div className='flex flex-wrap lg:flex-row p-6 space-y-2'>
+				<div className='flex flex-col w-full lg:w-3/5 space-y-0 lg:space-y-2'>
 					<strong className='text-2xl'>About us</strong>
 					<div>We are a team of nurses, doctors, technologists and executives dedicated to help nurses find jobs that they love.</div>
 					<div>All copyrights reserved &copy; 2020 - Health Explore</div>
 				</div>
-				<div className='flex flex-col w-1/5 space-y-2'>
+				<div className='flex flex-col w-full lg:w-1/5 space-y-0 lg:space-y-2'>
 					<strong className='text-2xl'>Sitemap</strong>
 					<div>Nurses</div>
 					<div>Employers</div>
 					<div>Social networking</div>
 					<div>Jobs</div>
 				</div>
-				<div className='flex flex-col w-1/5 space-y-2'>
+				<div className='flex flex-col w-full lg:w-1/5 space-y-0 lg:space-y-2'>
 				<strong className='text-2xl'>Privacy</strong>
 					<div>Terms of use</div>
 					<div>Privacy policy</div>
