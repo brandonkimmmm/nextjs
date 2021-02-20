@@ -121,17 +121,17 @@ const Index = ({ jobs, searchOptions, filters }) => {
 					}
 				</form>
 				{searchTerms.length > 0
-					? <div className='flex flex-wrap mx-4 mt-1'>
+					? <div className='flex flex-wrap items-center mb-4'>
 						{searchTerms.map((term) => (
 							<div className='m-1 rounded-full bg-gray-400 text-white p-2'>
 								{term}
-								<button className='focus:outline-none font-bold' onClick={() => clearSearchTerm(term)}>&nbsp;X</button>
+								<button className='focus:outline-none font-bold p-1' onClick={() => clearSearchTerm(term)}>&nbsp;X</button>
 							</div>
 						))}
 					</div>
 					: null
 				}
-				<div className='flex flex-row xl:space-x-4 xl:mt-4'>
+				<div className='flex flex-row xl:space-x-4'>
 					<div className='hidden xl:flex flex-col w-1/3 space-y-4 items-center'>
 						{Object.keys(filters).map((filter) => (
 							<FilterItem name={filter.toUpperCase().replace('_', ' ')} data={filters[filter]} />
