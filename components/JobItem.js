@@ -37,10 +37,10 @@ const JobItem = ({ job }) => {
 					</div>
 				</div>
 				<div className='flex flex-row lg:flex-col w-full lg:w-1/6 lg:justify-center space-x-2 lg:space-y-2 items-start mt-4 lg:items-end'>
-					<button type='submit' className='rounded-md border p-3 text-lg bg-blue-400 text-white'>
+					<button type='submit' className='rounded-md hover:bg-gray-400 hover:border-blue-400 hover:text-white focus:outline-none border p-3 text-lg bg-blue-400 text-white'>
 						<div>Job details</div>
 					</button>
-					<button type='submit' className='rounded-md border p-3 text-lg text-blue-400 border-blue-400'>
+					<button type='submit' className='rounded-md border hover:bg-gray-400 hover:text-white focus:outline-none p-3 text-lg text-blue-400 border-blue-400'>
 						<div>Save job</div>
 					</button>
 				</div>
@@ -55,7 +55,7 @@ const JobItem = ({ job }) => {
 					<li className='mt-4'></li>
 					{job.items.map((item) => (
 						<li className='flex flex-col space-y-4 py-4'>
-							<div className='flex flex-row w-full items-center' onClick={(e) => toggleJobDetails(e, item.job_id)}>
+							<div className='flex flex-row cursor-pointer select-none w-full items-center' onClick={(e) => toggleJobDetails(e, item.job_id)}>
 								<div className='flex-1 flex-col'>
 									<strong>{item.job_title}</strong>
 									<div>
@@ -81,11 +81,11 @@ const JobItem = ({ job }) => {
 
 	return (
 		<div>
-			<div className='flex items-center' onClick={(e) => toggleJobs(e)}>
-				<div className='rounded-lg w-10 flex justify-center bg-gray-300 text-xl p-1 mr-2  text-white'>
+			<div className='flex items-center cursor-pointer select-none' onClick={(e) => toggleJobs(e)}>
+				<div className='rounded-lg w-10 flex justify-center bg-gray-300 text-xl p-1 mr-2 text-white'>
 					{job.name.toUpperCase().substring(0, 2)}
 				</div>
-				{`${job.total_jobs_in_hospital} Jobs for ${job.name}`}
+				<div className={`${showJobs ? 'bg-blue-400 text-white' : null} hover:text-white hover:bg-blue-400 rounded-md px-2`}>{`${job.total_jobs_in_hospital} Jobs for ${job.name}`}</div>
 			</div>
 			{jobsList()}
 		</div>

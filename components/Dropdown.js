@@ -15,7 +15,7 @@ const Dropdown = ({ query, options, onOptionSelect }) => {
 			<div className={`absolute origin-top-right w-14 rounded-md space-y-1 shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-x-1 ${active ? null : 'hidden'}`}>
 				{options.map((option) => (
 					<div
-						className={`p-1 ${activeOption === option ? 'bg-gray-200' : null}`}
+						className={`p-1 cursor-pointer select-none ${activeOption === option ? 'bg-gray-200' : null}`}
 						key={option}
 						onClick={(e) => {
 							setActiveOption(option === 'clear' ? null : option);

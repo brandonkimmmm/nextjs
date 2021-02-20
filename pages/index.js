@@ -78,15 +78,16 @@ const Index = ({ jobs, searchOptions, filters }) => {
 			<ul className='absolute border bg-white w-full divide rounded-md overflow-y-auto max-h-40 text-lg'>
 				{searchString
 					? searchOptions
-						.filter((option) => option.includes(searchString))
+						.filter((option) => option.includes(searchString) && !searchTerms.includes(option))
 						.map((option) => (
-							<li className='py-1/2 px-1' onMouseDown={() => autoComplete(option)}>
+							<li className='py-1/2 px-1 cursor-pointer select-none hover:bg-gray-400 hover:text-white' onMouseDown={() => autoComplete(option)}>
 								{startCase(option)}
 							</li>
 						))
 					: searchOptions
+						.filter((option) => !searchTerms.includes(option))
 						.map((option) => (
-							<li className='py-1/2 px-1' onMouseDown={() => autoComplete(option)}>
+							<li className='py-1/2 px-1 cursor-pointer select-none hover:bg-gray-400 hover:text-white' onMouseDown={() => autoComplete(option)}>
 								{startCase(option)}
 							</li>
 						))
@@ -115,7 +116,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 						onFocus={() => setSearchFocus(true)}
 						onBlur={() => setSearchFocus(false)}
 					/>
-					{searchFocus && searchString
+					{searchFocus
 						? showOptions()
 						: null
 					}
@@ -175,16 +176,16 @@ const Index = ({ jobs, searchOptions, filters }) => {
 				</div>
 				<div className='flex flex-col w-full lg:w-1/5 space-y-0 lg:space-y-2'>
 					<strong className='text-2xl'>Sitemap</strong>
-					<div>Nurses</div>
-					<div>Employers</div>
-					<div>Social networking</div>
-					<div>Jobs</div>
+					<a href='#' className='cursor-pointer select-none'>Nurses</a>
+					<a href='#' className='cursor-pointer select-none'>Employers</a>
+					<a href='#' className='cursor-pointer select-none'>Social networking</a>
+					<a href='#' className='cursor-pointer select-none'>Jobs</a>
 				</div>
 				<div className='flex flex-col w-full lg:w-1/5 space-y-0 lg:space-y-2'>
 				<strong className='text-2xl'>Privacy</strong>
-					<div>Terms of use</div>
-					<div>Privacy policy</div>
-					<div>Cookie policy</div>
+					<a href='#' className='cursor-pointer select-none'>Terms of use</a>
+					<a href='#' className='cursor-pointer select-none'>Privacy policy</a>
+					<a href='#' className='cursor-pointer select-none'>Cookie policy</a>
 				</div>
 			</div>
 		</>
