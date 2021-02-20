@@ -13,9 +13,12 @@ const Index = ({ jobs, searchOptions, filters }) => {
 	const [searchTerms, setSearchTerms] = useState([]);
 	const [searchString, setSearchString] = useState('');
 	const [searchFocus, setSearchFocus] = useState(false);
+	const [apiLoading, setApiLoading] = useState(false);
 
-	useEffect(() => {
-		fetchJobsData();
+	useEffect(async () => {
+		setApiLoading(true);
+		await fetchJobsData();
+		setApiLoading(false);
 	}, [activeQueries, searchTerms])
 
 	const setQuery = (query, option) => {
@@ -39,10 +42,13 @@ const Index = ({ jobs, searchOptions, filters }) => {
 			url += `&search=${searchTerms}`;
 		}
 
-		const res = await fetch(url);
-		const data = await res.json();
-
-		setJobData(data.jobs);
+		try {
+			const res = await fetch(url);
+			const data = await res.json();
+			setJobData(data.jobs);
+		} catch (err) {
+			console.log(`error during API call: ${err.message}`);
+		}
 	};
 
 	const handleSubmit = (e) => {
@@ -143,13 +149,19 @@ const Index = ({ jobs, searchOptions, filters }) => {
 								<Dropdown query={query} options={['asc', 'desc', 'clear']} onOptionSelect={setQuery} />
 							))}
 						</div>
-						<ul className='pt-10 space-y-8'>
-							{jobData.map((job) => (
-								<li>
-									<JobItem job={job} />
-								</li>
-							))}
-						</ul>
+						{!apiLoading
+							? <ul className='pt-10 space-y-8'>
+								{jobData.length > 0
+									? jobData.map((job) => (
+										<li>
+											<JobItem job={job} />
+										</li>
+									))
+									: <li className='text-2xl font-bold'>NO JOBS FOUND</li>
+								}
+							</ul>
+							: <svg class="bg-black animate-spin h-5 w-5 ml-5 mt-10" viewBox="0 0 24 24"></svg>
+						}
 					</div>
 				</div>
 			</div>
