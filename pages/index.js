@@ -10,11 +10,12 @@ const Index = ({ jobs, filters }) => {
 
 	const [jobData, setJobData] = useState(jobs);
 	const [activeQueries, setActiveQueries] = useState({});
+	const [searchTerms, setSearchTerms] = useState([]);
 	const [searchString, setSearchString] = useState(null);
 
 	useEffect(() => {
 		fetchJobsData();
-	}, [activeQueries])
+	}, [activeQueries, searchTerms])
 
 	const setQuery = (query, option) => {
 		if (activeQueries[query] !== option) {
@@ -33,6 +34,10 @@ const Index = ({ jobs, filters }) => {
 			}
 		}
 
+		if (searchTerms.length > 0) {
+			url += `&search=${searchTerms}`;
+		}
+
 		const res = await fetch(url);
 		const data = await res.json();
 
@@ -40,10 +45,16 @@ const Index = ({ jobs, filters }) => {
 	};
 
 	const handleSubmit = (e) => {
-		console.log('tri')
 		e.preventDefault();
-		setQuery('search', searchString ? searchString.trim() : null);
+		const term = searchString.toLowerCase().trim();
+		if (!searchTerms.includes(term)) {
+			setSearchTerms([...searchTerms, term])
+		}
 	};
+
+	const clearSearchTerm = (term) => {
+		setSearchTerms(searchTerms.filter(t => t !== term));
+	}
 
 	return (
 		<>
@@ -64,6 +75,17 @@ const Index = ({ jobs, filters }) => {
 						onChange={(e) => setSearchString(e.target.value)}
 					/>
 				</form>
+				{searchTerms.length > 0
+					? <div className='flex flex-wrap mx-4 mt-1'>
+						{searchTerms.map((term) => (
+							<div className='m-1 rounded-full bg-gray-400 text-white p-2'>
+								{term}
+								<button className='focus:outline-none font-bold' onClick={() => clearSearchTerm(term)}>&nbsp;X</button>
+							</div>
+						))}
+					</div>
+					: null
+				}
 				<div className='flex flex-row space-x-4 m-4'>
 					<div className='flex flex-col w-1/3 space-y-4 items-center'>
 						{Object.keys(filters).map((filter) => (
