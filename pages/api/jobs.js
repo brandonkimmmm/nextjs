@@ -1,5 +1,5 @@
 import jobs from '../../data/jobs';
-import { intersection } from 'lodash';
+import { intersection, cloneDeep } from 'lodash';
 
 const searchIndex = {
 	nurse: []
@@ -38,7 +38,17 @@ for (let [index, job] of jobs.entries()) {
 	}
 };
 
+const experienceOrdering = {
+	'Internship': 0,
+	'Junior': 1,
+	'Intermediate': 2,
+	'Senior': 3
+};
+
 export default async (req, res) => {
+
+	const jobData = cloneDeep(jobs);
+
 	const { location, role, department, education, experience, search } = req.query;
 	let result = [];
 
@@ -56,31 +66,58 @@ export default async (req, res) => {
 		}
 
 		for (let index of activeIndexes) {
-			result.push(jobs[index]);
+			result.push(jobData[index]);
 		}
-
 	} else {
-		result = jobs
+		result = jobData;
 	}
 
-	if (location) {
-
+	if (location && (location === 'asc' || location === 'desc')) {
+		result.sort((a, b) => {
+			if (a.items[0].city < b.items[0].city) { return location === 'asc' ? -1 : 1; }
+			if (a.items[0].city > b.items[0].city) { return location === 'asc' ? 1 : -1; }
+			return 0;
+		});
 	}
 
-	if (role) {
-
+	if (role && (role === 'asc' || role === 'desc')) {
+		for (let job of result) {
+			job.items.sort((a, b) => {
+				if (a.job_title < b.job_title) { return role === 'asc' ? -1 : 1; }
+				if (a.job_title > b.job_title) { return role === 'asc' ? 1 : -1; }
+				return 0;
+			});
+		}
 	}
 
-	if (department) {
-
+	if (department && (department === 'asc' || department === 'desc')) {
+		for (let job of result) {
+			job.items.sort((a, b) => {
+				if (a.department[0] < b.department[0]) { return department === 'asc' ? -1 : 1; }
+				if (a.department[0] > b.department[0]) { return department === 'asc' ? 1 : -1; }
+				return 0;
+			});
+		}
 	}
 
-	if (education) {
-
+	if (education && (education === 'asc' || education === 'desc')) {
+		for (let job of result) {
+			job.items.sort((a, b) => {
+				if (a.required_credentials[0] < b.required_credentials[0]) { return education === 'asc' ? -1 : 1; }
+				if (a.required_credentials[0] > b.required_credentials[0]) { return education === 'asc' ? 1 : -1; }
+				return 0;
+			});
+		}
 	}
 
-	if (experience) {
-
+	if (experience && (experience === 'asc' || experience === 'desc')) {
+		for (let job of result) {
+			job.items.sort((a, b) => {
+				if (experienceOrdering[a.experience] < experienceOrdering[b.experience]) { return experience === 'asc' ? -1 : 1; }
+				if (experienceOrdering[a.experience] > experienceOrdering[b.experience]) { return experience === 'asc' ? 1 : -1; }
+				return 0;
+			});
+		}
 	}
 
 	// @todo: implement filters and search
