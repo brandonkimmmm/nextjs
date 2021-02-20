@@ -85,7 +85,7 @@ const JobItem = ({ job }) => {
 				<div className='rounded-lg w-10 flex justify-center bg-gray-300 text-xl p-1 mr-2 text-white'>
 					{job.name.toUpperCase().substring(0, 2)}
 				</div>
-				<div className={`${showJobs ? 'bg-blue-400 text-white' : null} hover:text-white hover:bg-blue-400 rounded-md px-2`}>{`${job.total_jobs_in_hospital} Jobs for ${job.name}`}</div>
+				<div className={`${showJobs ? 'bg-blue-400 text-white' : null} rounded-md px-2`}>{`${job.total_jobs_in_hospital} Jobs for ${job.name}`}</div>
 			</div>
 			{jobsList()}
 		</div>
