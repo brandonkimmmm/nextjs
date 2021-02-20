@@ -131,14 +131,14 @@ const Index = ({ jobs, searchOptions, filters }) => {
 					</div>
 					: null
 				}
-				<div className='flex flex-row space-x-4 m-4'>
-					<div className='flex flex-col w-1/3 space-y-4 items-center'>
+				<div className='flex flex-row space-x-4 xl:mx-4 mt-4'>
+					<div className='hidden xl:flex flex-col w-1/3 space-y-4 items-center'>
 						{Object.keys(filters).map((filter) => (
 							<FilterItem name={filter.toUpperCase().replace('_', ' ')} data={filters[filter]} />
 						))}
 					</div>
-					<div className='w-2/3 py-6 px-4 flex flex-col bg-white rounded-md'>
-						<div className='flex flex-row pt-8 space-x-4'>
+					<div className='w-full xl:w-2/3 py-6 px-4 flex flex-col bg-white rounded-md'>
+						<div className='hidden md:flex flex-row md:pt-8 space-x-4'>
 							<div className='flex-1'>
 								<strong className='text-xl'>7,753</strong> job postings
 							</div>
@@ -150,7 +150,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 							))}
 						</div>
 						{!apiLoading
-							? <ul className='pt-10 space-y-8'>
+							? <ul className='md:pt-10 space-y-8'>
 								{jobData.length > 0
 									? jobData.map((job) => (
 										<li>
