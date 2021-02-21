@@ -12,4 +12,4 @@ Additional used libraries:
 
 # Public URL
 
-- `https://nextjs-6k9en14n6-brandonkimmmm.vercel.app/`
+- `https://nextjs-cxiv5wpsn-brandonkimmmm.vercel.app/`
