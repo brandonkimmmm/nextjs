@@ -197,8 +197,8 @@ const Index = ({ jobs, searchOptions, filters }) => {
 export default Index
 
 export const getServerSideProps = async () => {
-	const jobsRes = await fetch(`${API_URL}/api/jobs`);
-	const filtersRes = await fetch(`${API_URL}/api/filters`);
+	const jobsRes = await fetch(`${API_URL}/jobs`);
+	const filtersRes = await fetch(`${API_URL}/filters`);
 
 	const { jobs, searchOptions } = await jobsRes.json();
 	const filters = await filtersRes.json();
