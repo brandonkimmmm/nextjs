@@ -1,4 +1,5 @@
 import { API_URL } from '../constants';
+import absoluteUrl from 'next-absolute-url';
 import Nav from '../components/Nav';
 import FilterItem from '../components/FilterItem';
 import JobItem from '../components/JobItem';
@@ -195,8 +196,9 @@ const Index = ({ jobs, searchOptions, filters }) => {
 export default Index
 
 export const getServerSideProps = async () => {
-	const jobsRes = await fetch(`${API_URL}/jobs`);
-	const filtersRes = await fetch(`${API_URL}/filters`);
+	const { origin } = absoluteUrl(req);
+	const jobsRes = await fetch(`${origin}/api/jobs`);
+	const filtersRes = await fetch(`${origin}/api/filters`);
 
 	const { jobs, searchOptions } = await jobsRes.json();
 	const filters = await filtersRes.json();
