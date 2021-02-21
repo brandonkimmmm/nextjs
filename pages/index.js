@@ -1,11 +1,11 @@
-import { API_URL } from '../constants';
-import absoluteUrl from 'next-absolute-url';
 import Nav from '../components/Nav';
 import FilterItem from '../components/FilterItem';
 import JobItem from '../components/JobItem';
 import { useState, useEffect } from 'react';
 import Dropdown from '../components/Dropdown';
 import { startCase } from 'lodash';
+
+const API_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/api' : `https://${process.env.VERCEL_URL}/api`;
 
 const Index = ({ jobs, searchOptions, filters }) => {
 	const queryOptions = ['location', 'role', 'department', 'education', 'experience'];
@@ -32,6 +32,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 	};
 
 	const fetchJobsData = async() => {
+		console.log(API_URL)
 		let url = `${API_URL}/jobs?`;
 		for (let activeQuery in activeQueries) {
 			if (activeQueries[activeQuery]) {
@@ -195,10 +196,9 @@ const Index = ({ jobs, searchOptions, filters }) => {
 
 export default Index
 
-export const getStaticProps = async ({req}) => {
-	const { origin } = absoluteUrl(req);
-	const jobsRes = await fetch(`${origin}/api/jobs`);
-	const filtersRes = await fetch(`${origin}/api/filters`);
+export const getServerSideProps = async () => {
+	const jobsRes = await fetch(`${API_URL}/api/jobs`);
+	const filtersRes = await fetch(`${API_URL}/api/filters`);
 
 	const { jobs, searchOptions } = await jobsRes.json();
 	const filters = await filtersRes.json();
