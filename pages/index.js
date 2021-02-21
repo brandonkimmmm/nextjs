@@ -80,14 +80,14 @@ const Index = ({ jobs, searchOptions, filters }) => {
 					? searchOptions
 						.filter((option) => option.includes(searchString) && !searchTerms.includes(option))
 						.map((option) => (
-							<li className='py-1/2 px-1 cursor-pointer select-none hover:bg-gray-400 hover:text-white' onMouseDown={() => autoComplete(option)}>
+							<li key={option} className='py-1/2 px-1 cursor-pointer select-none hover:bg-gray-400 hover:text-white' onMouseDown={() => autoComplete(option)}>
 								{startCase(option)}
 							</li>
 						))
 					: searchOptions
 						.filter((option) => !searchTerms.includes(option))
 						.map((option) => (
-							<li className='py-1/2 px-1 cursor-pointer select-none hover:bg-gray-400 hover:text-white' onMouseDown={() => autoComplete(option)}>
+							<li key={option} className='py-1/2 px-1 cursor-pointer select-none hover:bg-gray-400 hover:text-white' onMouseDown={() => autoComplete(option)}>
 								{startCase(option)}
 							</li>
 						))
@@ -97,7 +97,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 	}
 
 	return (
-		<>
+		<div>
 			<Nav />
 			<div className='bg-gray-200 w-full xl:px-4 xl:py-4'>
 				<form onSubmit={(e) => handleSubmit(e)} className='flex-row text-gray-600'>
@@ -124,7 +124,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 				{searchTerms.length > 0
 					? <div className='flex flex-wrap items-center mb-1 xl:mt-2 xl:mb-0'>
 						{searchTerms.map((term) => (
-							<div className='m-1 rounded-full bg-gray-400 text-white p-2'>
+							<div key={term} className='m-1 rounded-full bg-gray-400 text-white p-2'>
 								{term}
 								<button className='focus:outline-none font-bold p-1' onClick={() => clearSearchTerm(term)}>&nbsp;X</button>
 							</div>
@@ -135,7 +135,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 				<div className='flex flex-row xl:space-x-4 xl:mt-4'>
 					<div className='hidden xl:flex flex-col w-1/3 space-y-4 items-center'>
 						{Object.keys(filters).map((filter) => (
-							<FilterItem name={filter.toUpperCase().replace('_', ' ')} data={filters[filter]} />
+							<FilterItem key={filter} name={filter.toUpperCase().replace('_', ' ')} data={filters[filter]} />
 						))}
 					</div>
 					<div className='w-full xl:w-2/3 py-6 px-4 mb-4 flex flex-col bg-white xl:rounded-md'>
@@ -148,7 +148,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 									Sort By
 								</div>
 								{queryOptions.map((query) => (
-									<Dropdown query={query} options={['asc', 'desc', 'clear']} onOptionSelect={setQuery} />
+									<Dropdown key={query} query={query} options={['asc', 'desc', 'clear']} onOptionSelect={setQuery} />
 								))}
 							</div>
 						</div>
@@ -156,14 +156,14 @@ const Index = ({ jobs, searchOptions, filters }) => {
 							? <ul className='pt-10 space-y-8'>
 								{jobData.length > 0
 									? jobData.map((job) => (
-										<li>
+										<li key={job.name}>
 											<JobItem job={job} />
 										</li>
 									))
 									: <li className='text-2xl font-bold'>NO JOBS FOUND</li>
 								}
 							</ul>
-							: <svg class="bg-black animate-spin h-5 w-5 ml-5 mt-10" viewBox="0 0 24 24"></svg>
+							: <svg className='bg-black animate-spin h-5 w-5 ml-5 mt-10' viewBox='0 0 24 24'></svg>
 						}
 					</div>
 				</div>
@@ -188,7 +188,7 @@ const Index = ({ jobs, searchOptions, filters }) => {
 					<a href='#' className='cursor-pointer select-none'>Cookie policy</a>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

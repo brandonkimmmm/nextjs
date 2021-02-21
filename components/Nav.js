@@ -6,7 +6,7 @@ const Nav = () => {
 	return (
 		<nav className='flex flex-wrap items-center justify-between p-5 bg-white'>
 			<div className='flex flex-row items-center xl:hidden'>
-				<div classsName='absolute' onClick={() => setIsActive(!isActive)}>
+				<div onClick={() => setIsActive(!isActive)}>
 					<button className='focus:outline-none'>
 						<img className='toggle block' src='https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png' width='40' height='40' />
 					</button>

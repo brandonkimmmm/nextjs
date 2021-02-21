@@ -54,7 +54,7 @@ const JobItem = ({ job }) => {
 				<ul className='divide-y'>
 					<li className='mt-4'></li>
 					{job.items.map((item) => (
-						<li className='flex flex-col space-y-4 py-4'>
+						<li key={item.job_id} className='flex flex-col space-y-4 py-4'>
 							<div className='flex flex-row cursor-pointer select-none w-full items-center' onClick={(e) => toggleJobDetails(e, item.job_id)}>
 								<div className='flex-1 flex-col'>
 									<strong>{item.job_title}</strong>
