@@ -10,6 +10,6 @@ Additional used libraries:
 - Production - `npm run build && npm start`
   - Set the environment variable `NEXT_PUBLIC_VERCEL_URL` to your production URL.
 
-# Public URL
+## [Public URL](https://nextjs-bay-nu-69.vercel.app)
 
-- `https://nextjs-cxiv5wpsn-brandonkimmmm.vercel.app/`
+- https://nextjs-bay-nu-69.vercel.app
