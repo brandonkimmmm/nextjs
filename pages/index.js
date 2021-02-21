@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Dropdown from '../components/Dropdown';
 import { startCase } from 'lodash';
 
-const API_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/api' : `https://${process.env.VERCEL_URL}/api`;
+const API_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/api' : `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`;
 
 const Index = ({ jobs, searchOptions, filters }) => {
 	const queryOptions = ['location', 'role', 'department', 'education', 'experience'];
@@ -32,7 +32,6 @@ const Index = ({ jobs, searchOptions, filters }) => {
 	};
 
 	const fetchJobsData = async() => {
-		console.log(API_URL)
 		let url = `${API_URL}/jobs?`;
 		for (let activeQuery in activeQueries) {
 			if (activeQueries[activeQuery]) {

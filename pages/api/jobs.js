@@ -74,8 +74,8 @@ export default async (req, res) => {
 
 	if (location && (location === 'asc' || location === 'desc')) {
 		result.sort((a, b) => {
-			if (a.items[0].city < b.items[0].city) { return location === 'asc' ? -1 : 1; }
-			if (a.items[0].city > b.items[0].city) { return location === 'asc' ? 1 : -1; }
+			if (a.name < b.name) { return location === 'asc' ? -1 : 1; }
+			if (a.name > b.name) { return location === 'asc' ? 1 : -1; }
 			return 0;
 		});
 	}
